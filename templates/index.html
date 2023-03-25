@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>personal chatbot </title>
+</head>
+<body>
+    <h1> BLUNDERER BOT </h1>
+    <div id="chatbox"></div>
+    <form id="inputform" onsubmit="return sendMessage()">
+        <input id="input" type="text" placeholder="Type your message here...">
+        <button type="submit">ask</button>
+    </form>
+    <script>
+        function sendMessage() {
+            var input = document.getElementById("input").value;
+            var chatbox = document.getElementById("chatbox");
+            chatbox.innerHTML += "<p>You: " + input + "</p>";
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = xhr.responseText;
+                    chatbox.innerHTML += "<p>Bot: " + response + "</p>";
+                    document.getElementById("input").value = "";
+                }
+            };
+            xhr.open("GET", "/get?msg=" + input, true);
+            xhr.send();
+            return false;
+        }
+    </script>
+    <style>
+        body {
+            background-image: url("https://images.hdqwalls.com/download/sketches-gradients-icons-logo-4k-a8-3840x2160.jpg");
+            height: 100%;
+            display: inherit;
+            align-items: center;
+            font-family: 'Orbitron', courier, sans-serif;
+            background-color: #615e5c;
+        }
+        
+        h1 {
+            color: #ffffff;
+            text-align: center;
+            font-size: 30px;
+            font-weight: 1000;
+            font-style: italic;
+        }
+        
+        #chatbox {
+            display: block;
+            position: relative;
+            height: 450px;
+            border-radius: 15px;
+            background-color: #3d4351;
+            width: 100%;
+            border: 1px solid rgb(212, 29, 29);
+            color: aliceblue;
+            overflow-y: scroll;
+        }
+        
+        form {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 20%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        input[type=text] {
+            padding: 10px;
+            width: 60%;
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            margin-right: 10px;
+        }
+        
+        button[type=submit] {
+            padding: 10px 30px;
+            border: none;
+            border-radius: 20px;
+            background-color: #3b1c02;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        button[type=submit]:hover {
+            background-color: #0a0b0a;
+        }
+        
+    </style>
+</body>
+</html>
